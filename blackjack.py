@@ -1,5 +1,8 @@
 import random
 import numpy
+
+#alot
+
 class game:
 	
 	#2 3 4 5 . . . K A
