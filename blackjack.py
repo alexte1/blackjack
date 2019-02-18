@@ -1,8 +1,6 @@
 import random
 import numpy
 
-#alot
-
 class game:
 	
 	#2 3 4 5 . . . K A
@@ -45,6 +43,14 @@ class game:
 			self.gameBoard.append(tmp)
 			tmp = []
 
+		self.sumCards(playersList)
+
+	def gameProgression(self, playersList):
+		print "==========="
+		for i,j in zip(playersList, self.gameBoard):
+			print i, j
+
+	def sumCards(self, playersList):
 		for i in range(len(self.gameBoard)):
 			firstAce = False
 			secondAce = False
@@ -72,8 +78,6 @@ class game:
 					print playersList[i] + "\'s hand\n", self.gameBoard[i], "\nhand value: ", firstCard + 11, "or", firstCard + 1
 			else:
 					print playersList[i] + "\'s hand\n", self.gameBoard[i], "\nhand value: ", firstCard + secondCard, "\n"
-
-
 
 			
 
