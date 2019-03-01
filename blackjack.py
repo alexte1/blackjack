@@ -91,6 +91,7 @@ class game:
 		for i in range(len(self.gameBoard)):
 			tmpSum = 0
 			aceCard = False
+			playerSum = []
 			for j in range(len(self.gameBoard[i])):
 
 				currCard = self.gameBoard[i][j][0];
@@ -104,15 +105,22 @@ class game:
 
 			if aceCard:
 				tmpSum += 1
-				self.sumList.append(tmpSum)
+				playerSum.append(tmpSum)
 				tmpSum += 10
-				self.sumList.append(tmpSum)
+				playerSum.append(tmpSum)
 			else:
-				self.sumList.append(tmpSum)
+				playerSum.append(tmpSum)
 
-		for i,j in zip(self.gameBoard, self.sumList):
-			print i, j
+			self.sumList.append(playerSum)
 
+
+		#what is displayed to the terminal for players to see.
+		for i in range(len(playersList)):
+			print "------------------"
+			print playersList[i]
+			print self.gameBoard[i]
+			print self.sumList[i]
+		print "------------------"
 
 
 		# for i in range(len(self.gameBoard)):
