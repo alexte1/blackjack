@@ -20,6 +20,10 @@ import numpy
 #	As of 9:23 pm. I think i fixed 2+ way tie and the sum with >= 2 aces
 #	As of 9:38... NEED TO FIX multiple aces still. 
 #
+#
+#	3/5/19
+#	If everyone busts, there is a bug.
+#	Still havent fixed the multple aces
 ####################################################################################################
 
 
@@ -31,7 +35,7 @@ class game:
 	rank = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
 	# rank = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 	#H, D, C, S
-	suits = ["H", "D", "C", "S"]
+	suits = ["Hearts", "Diamonds", "Clover", "Spades"]
 	#combination of suits and rank
 	deck = []
 	#game board (dealer is at the end of the list)
@@ -99,7 +103,8 @@ class game:
 			for j in self.gameBoard:
 				while flag and self.bustList[i] == False:
 					print playersList[i]
-					hitorStay = raw_input("Do you want to hit? y/n: ")
+					hitorStay = raw_input("\n\nDo you want to hit? y/n: ")
+					print "\n\n"
 					if hitorStay == "y":
 						self.hit(playersList, playersList.index(playersList[i]))
 						flag = True
@@ -128,16 +133,18 @@ class game:
 				else:
 					tmpSum += currCard
 
-			# if aceCard:
-			while aceCounter > 0:
-				# aceCard = False
-				tmpSum += 1
-				if tmpSum <= 21:
-					playerSum.append(tmpSum)
-				tmpSum += 10
-				if tmpSum <= 21:
-					playerSum.append(tmpSum)
-				aceCounter -= 1
+			if aceCounter > 0:
+				while aceCounter > 0:
+					# aceCard = False
+					tmpSum += 1
+					if tmpSum <= 21:
+						playerSum.append(tmpSum)
+
+					tmpSum += 10
+					if tmpSum <= 21:
+						playerSum.append(tmpSum)
+
+					aceCounter -= 1
 			else:
 				if tmpSum <= 21:
 					playerSum.append(tmpSum)
@@ -149,6 +156,7 @@ class game:
 		for i in range(len(playersList)):
 			print "--------------------------------------"
 			if 21 in self.sumList[i]:
+				print self.sumList[i]
 				if len(self.sumList[i]) == 2:
 					print playersList[i]
 					print self.gameBoard[i]
@@ -218,11 +226,15 @@ class game:
 				if self.sumList[i][0] == highest:
 					print playersList[i]
 		elif False in self.bustList:
-			print self.bustList
+			# print self.bustList
 			print "Winner is: ", playersList[winnerIndex]
 		else:
 			# print "Winner is: ", playersList[winnerIndex]
 			print "No one won."
+
+
+		#need to reset bust List for next round
+		self.bustList = []
 
 
 def main():
