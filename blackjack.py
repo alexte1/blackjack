@@ -22,8 +22,21 @@ import numpy
 #
 #
 #	3/5/19
-#	If everyone busts, there is a bug.
+#	If everyone busts, there is a bug.	[FIXED] 3/9/19
 #	Still havent fixed the multple aces
+#
+#	3/9/19
+#	So far, first one to 21 wins.
+# 	
+#	Todo next:
+#		- Fix multiple aces
+#		- Assign a person to be dealer
+#			- If players list is: [Alex, Kris, Andrew], then
+#			  Alex is dealer in round 1. Then Kris, then Andrew
+#			- Make it so that one of the current dealer's card
+#			  can't be seen until it is their turn.
+#				- So if Alex is dealer, let Kris get asked first
+#				  wheter or not to hit or stay.
 ####################################################################################################
 
 
@@ -51,8 +64,15 @@ class game:
 			for y in range(len(self.suits)):
 				self.deck.append((self.rank[x],self.suits[y]))
 
+		#need to reset bust List for each round
+		self.bustList = []
 		for i in range(len(playersList)):
 			self.bustList.append(False)
+
+	def gameNumber(self, gameNumber):
+		print "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+		print "\t\tGame Number:", gameNumber
+		print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
 
 	def shuffleDeck(self):
 		self.gameBoard = []
@@ -66,12 +86,9 @@ class game:
 
 	def gameLogic(self, playersList, numPlayers):
 		global index_card_dealt
-		# iterator = 0
 		tmp = []
-		# cards = []
 
 		for i in playersList:
-			# print i + "'s hand:"
 			for j in range(2):
 				tmp.append(self.deck[index_card_dealt])
 				index_card_dealt += 1
@@ -80,35 +97,30 @@ class game:
 
 		self.sumCards(playersList)
 
-		#index is used to know where to append the card to.
+	#index is used to know where to append the card to.
 	def hit(self, playersList, index):
 		global index_card_dealt
 		tmp = []
 
 		self.gameBoard[index].append(self.deck[index_card_dealt])
 		index_card_dealt += 1
-		# for i in playersList:
-		# 	for j in range(1):
-		# 		tmp.append(self.deck[index_card_dealt])
-		# 		index_card_dealt += 1
-		# 	self.gameBoard[index].append(tmp)
-		# 	tmp = []
 
 		self.sumCards(playersList)
 
 	def gameProgression(self, playersList):
-
 		for i in range(len(playersList)):
 			flag = True
 			for j in self.gameBoard:
-				while flag and self.bustList[i] == False:
-					print playersList[i]
-					hitorStay = raw_input("\n\nDo you want to hit? y/n: ")
-					print "\n\n"
+				# print self.sumList
+				while flag and self.bustList[i] == False and [21] not in self.sumList:
+					print "\n*************************\n" + playersList[i] + ", do you want to hit?"
+					hitorStay = raw_input("y/n: ")
 					if hitorStay == "y":
+						print "\n" + playersList[i] + " chose to hit!"
 						self.hit(playersList, playersList.index(playersList[i]))
 						flag = True
 					else:
+						print "\n" + playersList[i] + " chose to stay!"
 						flag = False
 
 	def sumCards(self, playersList):
@@ -136,13 +148,17 @@ class game:
 			if aceCounter > 0:
 				while aceCounter > 0:
 					# aceCard = False
-					tmpSum += 1
-					if tmpSum <= 21:
-						playerSum.append(tmpSum)
+					addOne = tmpSum + 1
+					addEleven = tmpSum + 11
 
-					tmpSum += 10
-					if tmpSum <= 21:
+					if addOne == 21 or addEleven == 21:
+						tmpSum = 21
 						playerSum.append(tmpSum)
+					else:
+						if addOne <= 21:
+							playerSum.append(addOne)
+						if addEleven <= 21:
+							playerSum.append(addEleven)
 
 					aceCounter -= 1
 			else:
@@ -154,27 +170,26 @@ class game:
 
 		#what is displayed to the terminal for players to see.
 		for i in range(len(playersList)):
-			print "--------------------------------------"
+			print "\n" + playersList[i] + "'s hand:"
 			if 21 in self.sumList[i]:
-				print self.sumList[i]
+				# print self.sumList[i]
 				if len(self.sumList[i]) == 2:
-					print playersList[i]
+					# print playersList[i]
 					print self.gameBoard[i]
 					print "Blackjack!!!"
 				else:
-					print playersList[i]
+					# print playersList[i]
 					print self.gameBoard[i]
 					print "21!!!"
 			elif len(self.sumList[i]) == 0:
-				print playersList[i]
+				# print playersList[i]
 				print self.gameBoard[i]
 				print "Bust!!!"
 				self.bustList[i] = True
 			else:
-				print playersList[i]
+				# print playersList[i]
 				print self.gameBoard[i]
-				print self.sumList[i]
-		print "--------------------------------------"
+				print "Hand value:", self.sumList[i]
 			
 	def results(self, playersList):
 
@@ -227,18 +242,14 @@ class game:
 					print playersList[i]
 		elif False in self.bustList:
 			# print self.bustList
-			print "Winner is: ", playersList[winnerIndex]
+			print "Winner is: " + playersList[winnerIndex] + " with: ", highest
 		else:
 			# print "Winner is: ", playersList[winnerIndex]
 			print "No one won."
 
-
-		#need to reset bust List for next round
-		self.bustList = []
-
-
 def main():
 
+	gameNumber = 1
 	playersList = []
 	playFlag = True
 	names = "aaa"
@@ -249,19 +260,20 @@ def main():
 
 	while playFlag:
 		gameobj = game(playersList)
+		gameobj.gameNumber(gameNumber)
 		gameobj.shuffleDeck()
-		# gameobj.displayDeck()
 		gameobj.gameLogic(playersList, len(playersList))
 		gameobj.gameProgression(playersList)
 		gameobj.results(playersList)
+
 		var = raw_input("Another round? (y/n) - ")
-		if var == "y" or var == "yes":
+		if var == "y":
 			playFlag = True
+			gameNumber += 1
 		else:
-			playFlag = False
-
-
-
-
+			if var == "n":
+				playFlag = False
+			else:
+				print "Unknow input. Exiting game."
 
 main()
