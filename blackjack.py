@@ -1,44 +1,42 @@
 import random
 import numpy
+'''
+Development Log:
+	3/3/19
+	potential problems to fix: in results, i am only taking care of a 2 way draw for now.
+	Need to fix results.
+	Tie is not working, and also need to account for 2+ way tie
+	and an empty sum (means player bust)
+		- could just delete that player from the results calculation
+			-need to make sure they are not deleted when restarting
 
-####################################################################################################
-#Development Log:
-#	3/3/19
-#	potential problems to fix: in results, i am only taking care of a 2 way draw for now.
-#	Need to fix results.
-#	Tie is not working, and also need to account for 2+ way tie
-#	and an empty sum (means player bust)
-#		- could just delete that player from the results calculation
-#			-need to make sure they are not deleted when restarting
-#
-#
-#
-#	3/4/19
-#	Ran into a bug when a player has 2 aces.
-#	Might be fixed when we set aceFlag = Flase in sumCards
-#
-#	As of 9:23 pm. I think i fixed 2+ way tie and the sum with >= 2 aces
-#	As of 9:38... NEED TO FIX multiple aces still. 
-#
-#
-#	3/5/19
-#	If everyone busts, there is a bug.	[FIXED] 3/9/19
-#	Still havent fixed the multple aces
-#
-#	3/9/19
-#	So far, first one to 21 wins.
-# 	
-#	Todo next:
-#		- Fix multiple aces
-#		- Assign a person to be dealer
-#			- If players list is: [Alex, Kris, Andrew], then
-#			  Alex is dealer in round 1. Then Kris, then Andrew
-#			- Make it so that one of the current dealer's card
-#			  can't be seen until it is their turn.
-#				- So if Alex is dealer, let Kris get asked first
-#				  wheter or not to hit or stay.
-####################################################################################################
 
+
+	3/4/19
+	Ran into a bug when a player has 2 aces.
+	Might be fixed when we set aceFlag = Flase in sumCards
+
+	As of 9:23 pm. I think i fixed 2+ way tie and the sum with >= 2 aces
+	As of 9:38... NEED TO FIX multiple aces still. 
+
+
+	3/5/19
+	If everyone busts, there is a bug.	[FIXED] 3/9/19
+	Still havent fixed the multple aces
+
+	3/9/19
+	So far, first one to 21 wins.
+ 	
+	Todo next:
+		- Fix multiple aces
+		- Assign a person to be dealer
+			- If players list is: [Alex, Kris, Andrew], then
+			  Alex is dealer in round 1. Then Kris, then Andrew
+			- Make it so that one of the current dealer's card
+			  can't be seen until it is their turn.
+				- So if Alex is dealer, let Kris get asked first
+				  wheter or not to hit or stay.
+'''
 
 index_card_dealt = 0;
 
