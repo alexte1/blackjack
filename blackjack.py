@@ -44,6 +44,7 @@ class game:
 	
 	#2 3 4 5 . . . K A
 	rank = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
+	rank = ["A","A","A","A","A","A","A","A","A","A","A","A","A"]
 	# rank = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 	#H, D, C, S
 	suits = ["Hearts", "Diamonds", "Clover", "Spades"]
@@ -138,17 +139,17 @@ class game:
 				if currCard == "J" or currCard == "Q" or currCard == "K":
 					tmpSum += 10
 				elif currCard == "A":
-					# aceCard = True
-					aceCounter += 1
+					tmpSum += 1
+					playerSum.append(tmpSum)
+					tmpSum += 10
+					playerSum.append(tmpSum)
 				else:
 					tmpSum += currCard
 
 			if aceCounter > 0:
 				while aceCounter > 0:
-					# aceCard = False
 					addOne = tmpSum + 1
 					addEleven = tmpSum + 11
-
 					if addOne == 21 or addEleven == 21:
 						tmpSum = 21
 						playerSum.append(tmpSum)
@@ -157,7 +158,6 @@ class game:
 							playerSum.append(addOne)
 						if addEleven <= 21:
 							playerSum.append(addEleven)
-
 					aceCounter -= 1
 			else:
 				if tmpSum <= 21:
@@ -220,34 +220,26 @@ class game:
 				winnerIndex = i
 				draw = False
 			elif self.sumList[i][0] == highest:
-				# print "Draw Detected."
-				# print "Previous Highest = ", highest, "Which is", playersList[winnerIndex], "'s card"
-				# print "Now there is a tie with", playersList[i], "'s card"
-				#could be a problem if there are more than 2 draws...
 				draw = True
 				firstDraw = winnerIndex
 				secondDraw = i
-				# print "asd"
 
 		if draw == True:
-			# print "Tie between: ", playersList[firstDraw], playersList[secondDraw]
 			print "Tie between: "
-			#done so we can iterate through and print out whoever has the same highest
 			for i in range(len(self.sumList)):
 				if len(self.sumList[i]) == 0:
 					continue
 				if self.sumList[i][0] == highest:
 					print playersList[i]
 		elif False in self.bustList:
-			# print self.bustList
 			print "Winner is: " + playersList[winnerIndex] + " with: ", highest
 		else:
-			# print "Winner is: ", playersList[winnerIndex]
 			print "No one won."
 
 def main():
 
 	gameNumber = 1
+	dealerIndex = 0
 	playersList = []
 	playFlag = True
 	names = "aaa"
