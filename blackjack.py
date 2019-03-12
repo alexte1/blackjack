@@ -11,8 +11,6 @@ Development Log:
 		- could just delete that player from the results calculation
 			-need to make sure they are not deleted when restarting
 
-
-
 	3/4/19
 	Ran into a bug when a player has 2 aces.
 	Might be fixed when we set aceFlag = Flase in sumCards
@@ -249,14 +247,15 @@ def main():
 			playersList.append(names)
 
 	while playFlag:
+		
 		gameobj = game(playersList)
 		gameobj.gameNumber(gameNumber)
 		gameobj.shuffleDeck()
 		gameobj.gameLogic(playersList, len(playersList))
 		gameobj.gameProgression(playersList)
 		gameobj.results(playersList)
-
 		var = raw_input("Another round? (y/n) - ")
+
 		if var == "y":
 			playFlag = True
 			gameNumber += 1
