@@ -1,7 +1,11 @@
 import random
 import numpy
 
+<<<<<<< HEAD
 ##love
+=======
+#does this branch?
+>>>>>>> workingBranch
 '''
 Development Log:
 	3/3/19
