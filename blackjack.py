@@ -247,7 +247,6 @@ def main():
 			playersList.append(names)
 
 	while playFlag:
-		
 		gameobj = game(playersList)
 		gameobj.gameNumber(gameNumber)
 		gameobj.shuffleDeck()
