@@ -2,6 +2,7 @@ import random
 import numpy
 
 #this is the working branch
+#mellodrama
 
 '''
 Development Log:
@@ -251,14 +252,15 @@ def main():
 			playersList.append(names)
 
 	while playFlag:
+
 		gameobj = game(playersList)
 		gameobj.gameNumber(gameNumber)
 		gameobj.shuffleDeck()
 		gameobj.gameLogic(playersList, len(playersList))
 		gameobj.gameProgression(playersList)
 		gameobj.results(playersList)
-
 		var = raw_input("Another round? (y/n) - ")
+		
 		if var == "y":
 			playFlag = True
 			gameNumber += 1
