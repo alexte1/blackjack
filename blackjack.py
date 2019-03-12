@@ -1,7 +1,6 @@
 import random
 import numpy
 
-#does this branch?
 '''
 Development Log:
 	3/3/19
@@ -46,7 +45,6 @@ class game:
 	
 	#2 3 4 5 . . . K A
 	rank = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
-	rank = ["A","A","A","A","A","A","A","A","A","A","A","A","A"]
 	# rank = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 	#H, D, C, S
 	suits = ["Hearts", "Diamonds", "Clover", "Spades"]
