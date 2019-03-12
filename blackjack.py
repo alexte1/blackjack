@@ -1,10 +1,6 @@
 import random
 import numpy
 
-#this is now the testing branch.
-#i am adding more to the testing branch.
-#because i want to learn how to use github.
-
 '''
 Development Log:
 	3/3/19
