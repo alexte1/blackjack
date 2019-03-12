@@ -1,7 +1,7 @@
 import random
 import numpy
 
-#this is the working branch
+#this is now the testing branch.
 
 '''
 Development Log:
